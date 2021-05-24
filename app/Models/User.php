@@ -9,13 +9,17 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use App\Traits\Uuid;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
-    use HasFactory;
-    use HasProfilePhoto;
+    use Uuid;
+    use HasRoles;
     use Notifiable;
+    use HasFactory;
+    use HasApiTokens;
+    use HasProfilePhoto;
     use TwoFactorAuthenticatable;
 
     /**
@@ -26,6 +30,16 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'gender',
+        'date_of_birth',
+        'title',
+        'job_number',
+        'national_id',
+        'group',
+        'notification_preferences',
+        'mode',
+        'is_active',
         'password',
     ];
 
@@ -58,4 +72,14 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
+
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class, 'department_user');
+    }
 }

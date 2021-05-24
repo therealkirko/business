@@ -7,40 +7,62 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
+        <!-- plugins -->
+        <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+
+        <!-- App css -->
+    @if (Auth()->user()->mode)
+        <link href="assets/css/bootstrap-dark.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/app-dark.min.css" rel="stylesheet" type="text/css" />
+    @else
+        <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    @endif
+        <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
 
         @livewireStyles
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans antialiased">
-        <x-jet-banner />
-
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
-
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+@if (Auth()->user()->mode)
+    <body class="left-side-menu-dark">
+@else
+    
+    <body>
+@endif
+        <div id="wrapper">
+            @include('layouts.shared.topbar')
+            @include('layouts.shared.sidebar')
+            <div class="content-page">
+                <div class="content">
+                    {{ $slot }}
+                </div>
+                @include('layouts.shared.footer')
+            </div>
         </div>
 
         @stack('modals')
 
         @livewireScripts
+
+        <!-- Vendor js -->
+        <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+
+        <!-- optional plugins -->
+        <script src="{{ asset('assets/libs/moment/moment.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+
+        <!-- page js -->
+        <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script>
+
+        <!-- App js -->
+        <script src="{{ asset('assets/js/app.min.js') }}"></script>
+
     </body>
 </html>
