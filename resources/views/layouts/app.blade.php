@@ -21,6 +21,7 @@
         <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     @endif
         <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+        @stack('page-styles')
         <!-- Styles -->
         {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
 
@@ -32,7 +33,7 @@
 @if (Auth()->user()->mode)
     <body class="left-side-menu-dark">
 @else
-    
+
     <body>
 @endif
         <div id="wrapper">
@@ -60,6 +61,7 @@
 
         <!-- page js -->
         <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script>
+        @stack('page-scripts')
 
         <!-- App js -->
         <script src="{{ asset('assets/js/app.min.js') }}"></script>

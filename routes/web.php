@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::group(['prefix' => 'roles_and_permissions'], function() {
         Route::get('/', [RolesAndPermissionController::class, 'index'])->name('roles_and_permissions');
         Route::post('/store', [RolesAndPermissionController::class, 'store'])->name('roles_and_permissions.store');
+        Route::post('/assign', [RolesAndPermissionController::class, 'assign'])->name('roles_and_permissions.assign');
     });
 
     // Route::group(['prefix' => 'company'], function () {

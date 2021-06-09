@@ -10,7 +10,10 @@ class RolesAndPermissionController extends Controller
 {
     public function index()
     {
-        return view('roles-and-permissions.index');
+        $roles = Role::get();
+        $permissions =Permission::get();
+
+        return view('roles-and-permissions.index', compact('roles', 'permissions'));
     }
 
     public function store(Request $request)
@@ -28,6 +31,19 @@ class RolesAndPermissionController extends Controller
             Permission::create([
                 'name' => $request->name
             ]);
+
+        return redirect()->route('roles_and_permissions');
+    }
+
+    public function assign(Request $request)
+    {
+        $request->validate([
+            'role' => 'required',
+            'permissions' => 'required|array'
+        ]);
+
+        $role = Role::find($request->role);
+        $role->syncPermissions($request->permissions);
 
         return redirect()->route('roles_and_permissions');
     }
